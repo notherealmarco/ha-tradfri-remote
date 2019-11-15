@@ -38,7 +38,10 @@ remote_1:
       - light.kitchen_spotlights
     group_3:
       - light.kitchen_led_strip
-  scenes: input_select.kitchen_mood
+  right_arrow_mode: scenes
+  scenes:
+    - scene.kitchen_warm_white
+    - scene.kitchen_cold_white
   hold_group: group.kitchen
   remote: sensor.tradfri_remote_click
 ```
@@ -46,7 +49,9 @@ remote_1:
 | key | value |
 |------------|----------------------------------------------------------------------------|
 | groups | a map of all the groups, each group is a list of lights |
-| scenes | an input_select entity id, it cycles between the options |
+| right_arrow_mode | can be set to scenes or to input_select |
+| scenes (use only if right_arrow_mode is set to scenes) | a list of scenes's entity id |
+| input_select (use only if right_arrow_mode is set to input_select) | an input_select entity id, it cycles between the options |
 | hold_group | a group to switch on/off when holding the power button |
 | remote | tradfri remote's zigbee2mqtt entity (e.g. sensor.0xccccccfffe4062b9_click) |
 

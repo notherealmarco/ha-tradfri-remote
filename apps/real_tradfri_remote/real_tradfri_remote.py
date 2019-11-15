@@ -9,6 +9,8 @@ class TradfriRemote(hass.Hass):
 		self.listen_state(self.button_pressed, self.args["remote"])
 		self.last_action_was = False
 		self.current_index = 0
+		self.current_scene_index = 0
+		self.right_arrow_mode = self.args["right_arrow_mode"]
 		self.log("notherealmarco's TradfriRemote initialized!")
 		self.fast_click = 0
 		self.brightness_direction = False
@@ -63,7 +65,16 @@ class TradfriRemote(hass.Hass):
 				for d in devices:
 					if self.get_state(d) == "off":
 						back_off.append(d)
-			self.call_service("input_select/select_next", entity_id = self.args["scenes"])
+			if self.right_arrow_mode == "input_select":
+				self.call_service("input_select/select_next", entity_id = self.args["input_select"])
+			else:
+				scenes = self.args["scenes"]
+				scenes_len = len(scenes)
+				self.current_scene_index += 1
+				if (self.current_scene_index > scenes_len - 1):
+					self.current_scene_index = 0
+				self.call_service("scene/turn_on", entity_id = scenes[self.current_scene_index])
+
 			if len(back_off) > 0: self.run_in(self.turn_back_off, 1, devices = back_off)
 		
 		if new == "brightness_up_click" and old == "":
