@@ -1,0 +1,15 @@
+#this is a configuration example
+remote_1:
+  module: real_tradfri_remote
+  class: TradfriRemote
+  groups:
+    group_1:
+      - light.kitchen_ceiling_1
+      - light.kitchen_ceiling_2
+    group_2:
+      - light.kitchen_spotlights
+    m3:
+      - light.kitchen_led_strip
+  scenes: input_select.kitchen_mood
+  hold_group: group.kitchen
+  remote: sensor.tradfri_remote_click
