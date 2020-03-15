@@ -13,6 +13,7 @@
 | left arrow | cycle between groups |
 | right arrow | turn on the next scene to all the groups (without turning on the lights which are switched off) |
 | hold power | turn on/off all the groups |
+| hold arrows | turn on/off a device and mark it as selected |
 
 ## E1743 dimmer:
 
@@ -38,21 +39,34 @@ remote_1:
       - light.kitchen_spotlights
     group_3:
       - light.kitchen_led_strip
+  zigbee_names: #mark group 1 as Zigbee group
+    group_1:
+      - 0x14b457fffe6792fa
+      - 0xccccccfffe54400d
   right_arrow_mode: scenes
   scenes:
     - scene.kitchen_warm_white
     - scene.kitchen_cold_white
   hold_group: group.kitchen
+  left_hold_device: 1
+  right_hold_device: 2
+  reset_after: 10
   remote: sensor.tradfri_remote_click
 ```
+
+#### Warning: if you set `zigbee_names`, my [ha-zigbee-dimmer](https://github.com/notherealmarco/ha-zigbee-dimmer) script must be installed! Otherwise lights won't dimm.
 
 | key | value |
 |------------|----------------------------------------------------------------------------|
 | groups | a map of all the groups, each group is a list of lights |
+| zigbee_names | zigbee2mqtt device id's or friendly names, set only if you use Zigbee lights. Group name must stay the same and 'groups' still needs to be set |
 | right_arrow_mode | can be set to scenes or to input_select |
 | scenes (use only if right_arrow_mode is set to scenes) | a list of scenes's entity id |
 | input_select (use only if right_arrow_mode is set to input_select) | an input_select entity id, it cycles between the options |
 | hold_group | a group to switch on/off when holding the power button |
+| left_hold_device | group number to switch on / off (and mark as selected) when holding the left arrow. Can also be set to an entity_id like `light.kitchen_ceiling` |
+| right_hold_device | group number to switch on / off (and mark as selected) when holding the right arrow. Can also be set to an entity_id like `light.kitchen_ceiling` |
+| reset_after | idle time (in seconds) after which the first group will be marked as selected automatically |
 | remote | tradfri remote's zigbee2mqtt entity (e.g. sensor.0xccccccfffe4062b9_click) |
 
 ## HACS installation
