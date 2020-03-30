@@ -55,6 +55,7 @@ remote_1:
 ```
 
 #### Warning: if you set `zigbee_names`, my [ha-zigbee-dimmer](https://github.com/notherealmarco/ha-zigbee-dimmer) script must be installed! Otherwise lights won't dimm.
+#### If you are controlling non-zigbee devices, you need [this add-on](https://github.com/notherealmarco/appdaemon-light-dimmer) in order for the dimmer to work.
 
 | key | value |
 |------------|----------------------------------------------------------------------------|
